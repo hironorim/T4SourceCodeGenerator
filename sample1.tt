@@ -1,0 +1,21 @@
+﻿<#@ include file="DefImport.tt" #>
+
+CREATE TABLE [dbo].[Customer](
+	[No] [int] NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[Kane] [nvarchar](max) NULL,
+	[Sex] [nvarchar](1) NULL,
+	[TEL] [nvarchar](20) NULL,
+	[Birth] [datetime] NULL,
+ CONSTRAINT [PK_Customer] PRIMARY KEY CLUSTERED 
+(
+	[No] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+<# foreach(var rowList in DataFile) { #>
+INSERT INTO [dbo].[Customer]([No],[Name],[Kane],[Sex],[TEL],[Birth]) 
+VALUES(<#= rowList[0] #>, '<#= rowList[1] #>', '<#= rowList[2] #>', '<#= rowList[3] #>', '<#= rowList[4] #>', '<#= rowList[5] #>')
+<# } #>

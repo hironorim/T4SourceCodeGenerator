@@ -1,0 +1,3 @@
+<#@ include file="DefImport.tt" #>
+
+My Name Is <#= GetParamValue("name") #>

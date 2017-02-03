@@ -1,0 +1,63 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="DynamicJson.dll" #>
+<#@ assembly name="Microsoft.Csharp" #>
+<#@ assembly name="Microsoft.VisualBasic.dll" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="Codeplex.Data" #>
+<#@ import namespace="Microsoft.VisualBasic.FileIO" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.IO" #>
+<# 
+LoadDataFile(); 
+LoadSettingFile();
+#>
+<#+
+List<List<string>> DataFile = new List<List<string>>();
+dynamic SettingFile;
+
+private void LoadDataFile() {
+	var fileName = this.Host.ResolveParameterValue("", "", "DataFile");
+	if (string.IsNullOrEmpty(fileName))
+	{
+		return;
+	}
+
+	var parser = new TextFieldParser(fileName, Encoding.GetEncoding("Shift_JIS"));
+	if (fileName.EndsWith("tsv"))
+	{
+		parser.SetDelimiters("	");
+	} else {
+		parser.SetDelimiters(",");
+	}
+
+	while (!parser.EndOfData) {
+		DataFile.Add(new List<string>(parser.ReadFields()));
+	}
+
+/* debug
+	foreach(var rowdic in DataFile) {
+		foreach(var key in rowdic.Keys) {
+			Write(key + ":" + rowdic[key] + "	");
+		}
+
+		Write("\r\n");
+	}
+*/
+}
+
+private void LoadSettingFile() {
+	var fileName = this.Host.ResolveParameterValue("", "", "SettingFile");
+	if (string.IsNullOrEmpty(fileName))
+	{
+		return;
+	}
+
+	SettingFile = DynamicJson.Parse(File.ReadAllText(Host.ResolvePath(fileName)));
+}
+
+private string GetParamValue(string name) {
+	return this.Host.ResolveParameterValue("", "", name);
+}
+#>
