@@ -1,0 +1,20 @@
+<#@ include file="util.tt" #>
+<html>
+    <head></head>
+    <body>
+        <table>
+            <tr>
+                <th>都市</th>
+                <td>緯度</td>
+                <td>経度</td>
+            </tr>
+<# foreach(var item in JsonFile.city) { #>
+            <tr>
+                <th><#= item.name #></th>
+                <td><#= item.ido #></td>
+                <td><#= item.keido #></td>
+            </tr>
+<# } #>
+        </table>
+    </body>
+</html>

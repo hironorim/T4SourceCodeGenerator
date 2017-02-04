@@ -1,4 +1,4 @@
-﻿<#@ include file="DefImport.tt" #>
+﻿<#@ include file="util.tt" #>
 
 CREATE TABLE [dbo].[Customer](
 	[No] [int] NOT NULL,

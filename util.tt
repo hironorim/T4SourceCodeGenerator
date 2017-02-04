@@ -11,11 +11,11 @@
 <#@ import namespace="System.IO" #>
 <# 
 LoadDataFile(); 
-LoadSettingFile();
+LoadJsonFile();
 #>
 <#+
 List<List<string>> DataFile = new List<List<string>>();
-dynamic SettingFile;
+dynamic JsonFile;
 
 private void LoadDataFile() {
 	var fileName = this.Host.ResolveParameterValue("", "", "DataFile");
@@ -47,14 +47,14 @@ private void LoadDataFile() {
 */
 }
 
-private void LoadSettingFile() {
-	var fileName = this.Host.ResolveParameterValue("", "", "SettingFile");
+private void LoadJsonFile() {
+	var fileName = this.Host.ResolveParameterValue("", "", "JsonFile");
 	if (string.IsNullOrEmpty(fileName))
 	{
 		return;
 	}
 
-	SettingFile = DynamicJson.Parse(File.ReadAllText(Host.ResolvePath(fileName)));
+	JsonFile = DynamicJson.Parse(File.ReadAllText(Host.ResolvePath(fileName)));
 }
 
 private string GetParamValue(string name) {
